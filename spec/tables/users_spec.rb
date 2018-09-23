@@ -1,4 +1,4 @@
-require 'users'
+require 'tables/users'
 require 'json'
 
 describe Users do
