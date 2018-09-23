@@ -9,7 +9,7 @@ class Users
 
   def find_by(field, value)
     @users.select do |user|
-      user[field] == value.to_s
+      user[field].to_s == value
     end.map { |user| user.merge(associations_for(user)) }
   end
 
