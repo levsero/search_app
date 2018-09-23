@@ -6,70 +6,70 @@ describe Organizations do
   let(:tickets) { double(:ticket) }
   let(:organization_1) do
     {
-      "_id" => 1,
-      "url" => "http://initech.zendesk.com/api/v2/organizations/101.json",
-      "external_id" => "9270ed79-35eb-4a38-a46f-35725197ea8d",
-      "name" => "Enthaze",
-      "domain_names" => [
-        "kage.com",
-        "ecratic.com",
-        "endipin.com",
-        "zentix.com"
+      '_id' => 1,
+      'url' => 'http://initech.zendesk.com/api/v2/organizations/101.json',
+      'external_id' => '9270ed79-35eb-4a38-a46f-35725197ea8d',
+      'name' => 'Enthaze',
+      'domain_names' => [
+        'kage.com',
+        'ecratic.com',
+        'endipin.com',
+        'zentix.com'
       ],
-      "created_at" => "2016-05-21T11:10:28 -10:00",
-      "details" => "MegaCorp",
-      "shared_tickets" => false,
-      "tags" => [
-        "Fulton",
-        "West",
-        "Rodriguez",
-        "Farley"
+      'created_at' => '2016-05-21T11:10:28 -10:00',
+      'details' => 'MegaCorp',
+      'shared_tickets' => false,
+      'tags' => %w[
+        Fulton
+        West
+        Rodriguez
+        Farley
       ]
     }
   end
   let(:organization_2) do
     {
-      "_id" => 2,
-      "url" => "http://initech.zendesk.com/api/v2/organizations/102.json",
-      "external_id" => "7cd6b8d4-2999-4ff2-8cfd-44d05b449226",
-      "name" => "Nutralab",
-      "domain_names" => [
-        "trollery.com",
-        "datagen.com",
-        "bluegrain.com",
-        "dadabase.com"
+      '_id' => 2,
+      'url' => 'http://initech.zendesk.com/api/v2/organizations/102.json',
+      'external_id' => '7cd6b8d4-2999-4ff2-8cfd-44d05b449226',
+      'name' => 'Nutralab',
+      'domain_names' => [
+        'trollery.com',
+        'datagen.com',
+        'bluegrain.com',
+        'dadabase.com'
       ],
-      "created_at" => "2016-04-07T08:21:44 -10:00",
-      "details" => "Non profit",
-      "shared_tickets" => false,
-      "tags" => [
-        "Cherry",
-        "Collier",
-        "Fuentes",
-        "Trevino"
+      'created_at' => '2016-04-07T08:21:44 -10:00',
+      'details' => 'Non profit',
+      'shared_tickets' => false,
+      'tags' => %w[
+        Cherry
+        Collier
+        Fuentes
+        Trevino
       ]
     }
   end
   let(:organization_3) do
     {
-      "_id" => 3,
-      "url" => "http://initech.zendesk.com/api/v2/organizations/103.json",
-      "external_id" => "e73240f3-8ecf-411d-ad0d-80ca8a84053d",
-      "name" => "Plasmos",
-      "domain_names" => [
-        "comvex.com",
-        "automon.com",
-        "verbus.com",
-        "gogol.com"
+      '_id' => 3,
+      'url' => 'http://initech.zendesk.com/api/v2/organizations/103.json',
+      'external_id' => 'e73240f3-8ecf-411d-ad0d-80ca8a84053d',
+      'name' => 'Plasmos',
+      'domain_names' => [
+        'comvex.com',
+        'automon.com',
+        'verbus.com',
+        'gogol.com'
       ],
-      "created_at" => "2016-05-28T04:40:37 -10:00",
-      "details" => "profit",
-      "shared_tickets" => true,
-      "tags" => [
-        "Parrish",
-        "Lindsay",
-        "Armstrong",
-        "Vaughn"
+      'created_at' => '2016-05-28T04:40:37 -10:00',
+      'details' => 'profit',
+      'shared_tickets' => true,
+      'tags' => %w[
+        Parrish
+        Lindsay
+        Armstrong
+        Vaughn
       ]
     }
   end
@@ -141,6 +141,12 @@ describe Organizations do
     context 'and there are multiple organizations that match' do
       it 'returns the organizations' do
         expect(subject.find_by('shared_tickets', 'false')).to eq([organization_1_with_associations, organization_2_with_associations])
+      end
+    end
+
+    context 'and the field is an array' do
+      it 'returns the organizations' do
+        expect(subject.find_by('tags', 'West')).to eq([organization_1_with_associations])
       end
     end
   end

@@ -8,7 +8,3 @@ Have created one "table" for each of the object types.
 - An additional in-memory-index is also created for each foreign key as they are the most commonly referenced fields.
   - As opposed to the primary index the values here are the primary keys of the object eg. on the users table there is an index `{[org_key] => [array of user _ids]}`. This allows for multiple additional indexes while limiting the extra memory.
 - Could add indexes on every field but don't think the space-performance ratio would be worthwhile, so unless there are specific performance issues is not needed.
-
-## TODO
-
-- Handle queries on tags, domain_names and the like.

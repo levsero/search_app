@@ -14,7 +14,7 @@ describe Users do
       'created_at' => '2016-04-15T05 =>19 =>46 -10 =>00',
       'active' => true,
       'verified' => true,
-      'shared' => false,
+      'shared' => true,
       'locale' => 'en-AU',
       'timezone' => 'Armenia',
       'last_login_at' => '2013-08-04T01 =>03 =>27 -10 =>00',
@@ -162,6 +162,18 @@ describe Users do
     end
 
     context 'and there are multiple users that match' do
+      it 'returns the users' do
+        expect(subject.find_by('timezone', 'Armenia')).to eq([user_1_with_associations, user_2_with_associations])
+      end
+    end
+
+    context 'and the field is not a string' do
+      it 'returns the user' do
+        expect(subject.find_by('shared', 'true')).to eq([user_1_with_associations])
+      end
+    end
+
+    context 'and the field is an array' do
       it 'returns the users' do
         expect(subject.find_by('timezone', 'Armenia')).to eq([user_1_with_associations, user_2_with_associations])
       end

@@ -8,7 +8,11 @@ class Organizations
 
   def find_by(field, value)
     @organizations.select do |organization|
-      organization[field].to_s == value
+      if organization[field].is_a? Array
+        organization[field].include?(value)
+      else
+        organization[field].to_s == value
+      end
     end.map { |organization| organization.merge(associations_for(organization)) }
   end
 
