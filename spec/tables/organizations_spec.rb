@@ -77,10 +77,10 @@ describe Organizations do
   let(:organizations_hash) { [organization_1, organization_2, organization_3] }
 
   subject(:organizations) do
-    Organizations.new(organizations_hash, users, tickets)
+    Organizations.new.add_data(organizations_hash, users, tickets)
   end
 
-  describe '.new' do
+  describe '#add_data' do
     it 'succesfully creates a organizations instance' do
       expect(subject).to be
     end

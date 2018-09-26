@@ -82,10 +82,10 @@ describe Users do
   let(:users_hash) { [user_1, user_2, user_3] }
 
   subject(:users) do
-    Users.new(users_hash, organizations, tickets)
+    Users.new.add_data(users_hash, organizations, tickets)
   end
 
-  describe '.new' do
+  describe '#add_data' do
     it 'succesfully creates a users instance' do
       expect(subject).to be
     end

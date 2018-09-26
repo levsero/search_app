@@ -1,10 +1,11 @@
 class Users
-  def initialize(users, organizations, tickets)
+  def add_data(users, organizations, tickets)
     @users = users
     @indexed_by_id = index_by_id
     @indexed_by_organization = indexed_by_organization
     @organizations = organizations
     @tickets = tickets
+    self
   end
 
   def find_by(field, value)

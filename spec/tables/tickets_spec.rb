@@ -83,10 +83,10 @@ describe Tickets do
   let(:tickets_hash) { [ticket_1, ticket_2, ticket_3] }
 
   subject(:tickets) do
-    Tickets.new(tickets_hash, organizations, users)
+    Tickets.new.add_data(tickets_hash, organizations, users)
   end
 
-  describe '.new' do
+  describe '#add_data' do
     it 'succesfully creates a tickets instance' do
       expect(subject).to be
     end
