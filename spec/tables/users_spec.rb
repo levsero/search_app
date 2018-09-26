@@ -10,7 +10,7 @@ describe Users do
       'url' => 'http =>//initech.zendesk.com/api/v2/users/1.json',
       'external_id' => '74341f74-9c79-49d5-9611-87ef9b6eb75f',
       'name' => 'Francisca Rasmussen',
-      'alias' => 'Miss Coffey',
+      'alias' => nil,
       'created_at' => '2016-04-15T05 =>19 =>46 -10 =>00',
       'active' => true,
       'verified' => true,
@@ -176,6 +176,12 @@ describe Users do
     context 'and the field is an array' do
       it 'returns the users' do
         expect(subject.find_by('timezone', 'Armenia')).to eq([user_1_with_associations, user_2_with_associations])
+      end
+    end
+
+    context 'and the field is nil' do
+      it 'returns the users' do
+        expect(subject.find_by('alias', '')).to eq([user_1_with_associations])
       end
     end
   end

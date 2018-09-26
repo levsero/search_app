@@ -64,7 +64,7 @@ describe Tickets do
       'subject' => 'A Catastrophe in Hungary',
       'description' => 'Ipsum fugiat voluptate reprehenderit cupidatat aliqua dolore consequat. Consequat ullamco minim laboris veniam ea id laborum et eiusmod excepteur sint laborum dolore qui.',
       'priority' => 'normal',
-      'status' => 'closed',
+      'status' => nil,
       'submitter_id' => 1,
       'assignee_id' => 2,
       'organization_id' => 2,
@@ -178,6 +178,12 @@ describe Tickets do
     context 'and the field is an array' do
       it 'returns the tickets' do
         expect(subject.find_by('tags', 'Ohio')).to eq([ticket_1_with_associations])
+      end
+    end
+
+    context 'and the field is nil' do
+      it 'returns the tickets' do
+        expect(subject.find_by('status', '')).to eq([ticket_3_with_associations])
       end
     end
   end

@@ -32,7 +32,7 @@ describe Organizations do
       '_id' => 2,
       'url' => 'http://initech.zendesk.com/api/v2/organizations/102.json',
       'external_id' => '7cd6b8d4-2999-4ff2-8cfd-44d05b449226',
-      'name' => 'Nutralab',
+      'name' => nil,
       'domain_names' => [
         'trollery.com',
         'datagen.com',
@@ -147,6 +147,12 @@ describe Organizations do
     context 'and the field is an array' do
       it 'returns the organizations' do
         expect(subject.find_by('tags', 'West')).to eq([organization_1_with_associations])
+      end
+    end
+
+    context 'and the field is nil' do
+      it 'returns the organizations' do
+        expect(subject.find_by('name', '')).to eq([organization_2_with_associations])
       end
     end
   end
