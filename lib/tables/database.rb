@@ -32,7 +32,9 @@ class Database
     @database.keys
   end
 
-  def search(table, field, value)
-    @database[table].find_by(field, value)
+  def search(_table, field, value)
+    result = []
+    @database.values.each { |table| result << table.find_by(field, value) }
+    result.flatten
   end
 end

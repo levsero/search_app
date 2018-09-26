@@ -1,9 +1,12 @@
 require 'tables/database'
 
 describe Database do
-  let(:organizations) { double(:organizations, add_data: nil, find_by: []) }
-  let(:users) { double(:users, add_data: nil, find_by: []) }
-  let(:tickets) { double(:tickets, add_data: nil, find_by: []) }
+  let(:user) { double(:user) }
+  let(:organization) { double(:organization) }
+  let(:ticket) { double(:ticket) }
+  let(:organizations) { double(:organizations, add_data: nil, find_by: [organization]) }
+  let(:users) { double(:users, add_data: nil, find_by: [user]) }
+  let(:tickets) { double(:tickets, add_data: nil, find_by: [ticket]) }
 
   before do
     allow(Users).to receive(:new).and_return(users)
@@ -32,34 +35,8 @@ describe Database do
   describe '#search' do
     let(:database) { Database.new('{"organizations": []}', '{"users": []}', '{"tickets": []}') }
 
-    context 'when calling users' do
-      before do
-        database.search('users', '_id', '234')
-      end
-
-      it 'calls the users table' do
-        expect(users).to have_received(:find_by).with('_id', '234')
-      end
-    end
-
-    context 'when calling organizations' do
-      before do
-        database.search('organizations', 'name', 'zendesk')
-      end
-
-      it 'calls the organizations table' do
-        expect(organizations).to have_received(:find_by).with('name', 'zendesk')
-      end
-    end
-
-    context 'when calling tickets' do
-      before do
-        database.search('tickets', 'description', 'flooded')
-      end
-
-      it 'calls the tickets table' do
-        expect(tickets).to have_received(:find_by).with('description', 'flooded')
-      end
+    it 'combines the results from all tables' do
+      expect(database.search('users', '_id', '234')).to eq([user, ticket, organization])
     end
   end
 end

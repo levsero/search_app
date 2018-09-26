@@ -12,13 +12,6 @@ class SearchApp
 
   def accept_inputs
     loop do
-      puts 'Input a table, field, and value'
-      table = gets.chomp.downcase
-      unless @database.available_tables.include?(table)
-        puts "table '#{table}' does not exist"
-        next
-      end
-
       puts 'Select a field to search'
       field = gets.chomp
       if field.empty?
@@ -36,5 +29,5 @@ class SearchApp
   end
 end
 
-app = SearchApp.new('data/organizations.json', 'data/tickets.json', 'data/users.json')
+app = SearchApp.new('data/organizations.json', 'data/users.json', 'data/tickets.json')
 app.accept_inputs
