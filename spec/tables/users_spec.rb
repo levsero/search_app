@@ -1,5 +1,4 @@
 require 'tables/users'
-require 'json'
 
 describe Users do
   let(:organizations) { double(:organizations) }

@@ -1,5 +1,4 @@
 require 'tables/tickets'
-require 'json'
 
 describe Tickets do
   let(:organizations) { double(:organizations) }
