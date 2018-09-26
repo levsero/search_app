@@ -107,9 +107,9 @@ describe Organizations do
     let(:ticket_2) { { id: 2, desciption: 'need graphql' } }
     let(:ticket_3) { { id: 3, desciption: 'need relay' } }
     let(:organization_1_tickets) { [ticket_1] }
-    let(:organization_2_tickets) { [ticket_2, ticket_2] }
+    let(:organization_2_tickets) { [ticket_2, ticket_3] }
     let(:organization_1_users) { [user_1] }
-    let(:organization_2_users) { [user_2, user_2] }
+    let(:organization_2_users) { [user_2] }
     let(:organization_1_with_associations) { organization_1.merge(tickets: organization_1_tickets, users: organization_1_users) }
     let(:organization_2_with_associations) { organization_2.merge(tickets: organization_2_tickets, users: organization_2_users) }
 
