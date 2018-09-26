@@ -1,4 +1,4 @@
-require 'tables/database'
+require 'database/database'
 
 describe Database do
   let(:user) { double(:user) }

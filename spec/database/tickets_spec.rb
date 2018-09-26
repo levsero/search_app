@@ -1,4 +1,4 @@
-require 'tables/tickets'
+require 'database/tickets'
 
 describe Tickets do
   let(:organizations) { double(:organizations) }

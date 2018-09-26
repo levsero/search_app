@@ -1,4 +1,4 @@
-require 'tables/users'
+require 'database/users'
 
 describe Users do
   let(:organizations) { double(:organizations) }

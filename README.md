@@ -58,6 +58,7 @@
 
 ### Tables and indexing
 
+- Each table inherits from the `BaseTable` class which has the default search algorithm built in (ie. if field supplied only look for values on that field otherwise search across all fields).
 - The files are each stored in a separate table to allow for optimising and changing based on its individual needs. (eg. what to index and which associations to pull in.) This also gives more flexibility for future changes.
 - Each table has the original hash saved which is used for arbitrary queries which need to scan the whole table.
 - `#add_data`is a separate method outside of the`initialize` because all the tables have to be init'ed before they can be stored.
@@ -74,4 +75,5 @@
 
 - Currently the main bottleneck to scalability is the memory usage, since it stores everything in memory. Though have tested it locally with up to 100,000 users and 100,000 tickets and have had no issues. If you would want it to scale then would have to either start writing portions to disk or could keep it all in memory and start splitting it across machines.
 - Having each data type stored in its own table would allow for fairly easy parrellization or even potentially running each one on its own machine to scale them individually, though would still have to be able to scale each individual table sufficiently.
-- Currently all searches need to do a full scan of the table which is O(n) time. The additional association lookups is (near) constant time as all associations are indexed. But being that it is all in memory the performance is really fast and even full scans of 100,000 items are near instantaneous.
+- Currently all searches need to do a full scan of the table which is O(n) time. The additional association lookups is (near) constant time as all associations are indexed.
+- Being that it is all in memory the performance is prety fast and even full scans of over 100,000 items when checking every field are approx 1.2 seconds in local testing and when searching on a specific field takes under a tenth of a second.

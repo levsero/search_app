@@ -1,4 +1,4 @@
-require_relative './tables/database'
+require_relative './database/database'
 require 'json'
 
 class SearchApp
