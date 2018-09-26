@@ -1,4 +1,6 @@
-class Users
+require_relative './base_table'
+
+class Users < BaseTable
   def add_data(users, organizations, tickets)
     @users = users
     @indexed_by_id = index_by_id
@@ -6,16 +8,6 @@ class Users
     @organizations = organizations
     @tickets = tickets
     self
-  end
-
-  def find_by(field, value)
-    @users.select do |user|
-      if user[field].is_a? Array
-        user[field].include?(value)
-      else
-        user[field].to_s == value
-      end
-    end.map { |user| user.merge(associations_for(user)) }
   end
 
   def find_by_organization(organization_id)
@@ -27,6 +19,10 @@ class Users
   end
 
   private
+
+  def data
+    @users
+  end
 
   def associations_for(user)
     {

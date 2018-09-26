@@ -4,6 +4,7 @@
 - run `ruby lib/search_app.rb` in the current directory (or the correct relative directory from whereever the command is being run).
 - It will automatically load the data from the `/data` directory.
 - It will then prompt for the field you wish to search for, followed by the value.
+- If you leave the field prompt empty, it will search all fields in all tables for the value.
 - The response is a pretty formatted json string, where the associations have been merged in to the base items.
   eg:
 

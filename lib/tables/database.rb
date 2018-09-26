@@ -20,10 +20,10 @@ class Database
     @database['organizations'] = organizations
   end
 
-  def self.initialize_from_files(_organizations_path, _users_path, _tickets_path)
-    organizations_json = File.read('data/organizations.json')
-    users_json = File.read('data/users.json')
-    tickets_json = File.read('data/tickets.json')
+  def self.initialize_from_files(organizations_path, users_path, tickets_path)
+    organizations_json = File.read(organizations_path)
+    users_json = File.read(users_path)
+    tickets_json = File.read(tickets_path)
 
     new(organizations_json, users_json, tickets_json)
   end
@@ -32,9 +32,9 @@ class Database
     @database.keys
   end
 
-  def search(_table, field, value)
+  def search(value, field)
     result = []
-    @database.values.each { |table| result << table.find_by(field, value) }
+    @database.values.each { |table| result << table.find_by(value, field) }
     result.flatten
   end
 end

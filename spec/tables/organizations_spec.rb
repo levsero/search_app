@@ -119,39 +119,67 @@ describe Organizations do
       allow(tickets).to receive(:find_by_organization).with(2).and_return(organization_2_tickets)
     end
 
-    context 'and the field does not exist' do
-      it 'returns an empty array' do
-        expect(subject.find_by('made up', 'justin')).to eq([])
+    context 'and a field is specified' do
+      context 'and the field does not exist' do
+        it 'returns an empty array' do
+          expect(subject.find_by('justin', 'madeup')).to eq([])
+        end
+      end
+
+      context 'and there no organizations that match' do
+        it 'returns an empty array' do
+          expect(subject.find_by('justin', 'name')).to eq([])
+        end
+      end
+
+      context 'and there is a single user that matches' do
+        it 'returns the correct organization' do
+          expect(subject.find_by('Non profit', 'details')).to eq([organization_2_with_associations])
+        end
+      end
+
+      context 'and there are multiple organizations that match' do
+        it 'returns the organizations' do
+          expect(subject.find_by('false', 'shared_tickets')).to eq([organization_1_with_associations, organization_2_with_associations])
+        end
+      end
+
+      context 'and the field is an array' do
+        it 'returns the organizations' do
+          expect(subject.find_by('West', 'tags')).to eq([organization_1_with_associations])
+        end
+      end
+
+      context 'and the field is nil' do
+        it 'returns the organizations' do
+          expect(subject.find_by('', 'name')).to eq([organization_2_with_associations])
+        end
       end
     end
 
-    context 'and there no organizations that match' do
-      it 'returns an empty array' do
-        expect(subject.find_by('name', 'justin')).to eq([])
+    context 'and the field is empty' do
+      context 'and there no organizations that match' do
+        it 'returns an empty array' do
+          expect(subject.find_by('justin', '')).to eq([])
+        end
       end
-    end
 
-    context 'and there is a single user that matches' do
-      it 'returns the correct user' do
-        expect(subject.find_by('details', 'Non profit')).to eq([organization_2_with_associations])
+      context 'and there is a single organization that matches' do
+        it 'returns the correct organization' do
+          expect(subject.find_by('Non profit', '')).to eq([organization_2_with_associations])
+        end
       end
-    end
 
-    context 'and there are multiple organizations that match' do
-      it 'returns the organizations' do
-        expect(subject.find_by('shared_tickets', 'false')).to eq([organization_1_with_associations, organization_2_with_associations])
+      context 'and there are multiple organizations that match' do
+        it 'returns the organizations' do
+          expect(subject.find_by('false', '')).to eq([organization_1_with_associations, organization_2_with_associations])
+        end
       end
-    end
 
-    context 'and the field is an array' do
-      it 'returns the organizations' do
-        expect(subject.find_by('tags', 'West')).to eq([organization_1_with_associations])
-      end
-    end
-
-    context 'and the field is nil' do
-      it 'returns the organizations' do
-        expect(subject.find_by('name', '')).to eq([organization_2_with_associations])
+      context 'and the value is in an array' do
+        it 'returns the organizations' do
+          expect(subject.find_by('West', '')).to eq([organization_1_with_associations])
+        end
       end
     end
   end

@@ -144,43 +144,69 @@ describe Users do
 
     context 'and the field does not exist' do
       it 'returns an empty array' do
-        expect(subject.find_by('made up', 'justin')).to eq([])
+        expect(subject.find_by('justin', 'madeup')).to eq([])
       end
     end
 
     context 'and there no users that match' do
       it 'returns an empty array' do
-        expect(subject.find_by('name', 'justin')).to eq([])
+        expect(subject.find_by('justin', 'name')).to eq([])
       end
     end
 
     context 'and there is a single user that matches' do
       it 'returns the correct user' do
-        expect(subject.find_by('role', 'admin')).to eq([user_2_with_associations])
+        expect(subject.find_by('admin', 'role')).to eq([user_2_with_associations])
       end
     end
 
     context 'and there are multiple users that match' do
       it 'returns the users' do
-        expect(subject.find_by('timezone', 'Armenia')).to eq([user_1_with_associations, user_2_with_associations])
+        expect(subject.find_by('Armenia', 'timezone')).to eq([user_1_with_associations, user_2_with_associations])
       end
     end
 
     context 'and the field is not a string' do
       it 'returns the user' do
-        expect(subject.find_by('shared', 'true')).to eq([user_1_with_associations])
+        expect(subject.find_by('true', 'shared')).to eq([user_1_with_associations])
       end
     end
 
     context 'and the field is an array' do
       it 'returns the users' do
-        expect(subject.find_by('timezone', 'Armenia')).to eq([user_1_with_associations, user_2_with_associations])
+        expect(subject.find_by('Armenia', 'timezone')).to eq([user_1_with_associations, user_2_with_associations])
       end
     end
 
     context 'and the field is nil' do
       it 'returns the users' do
-        expect(subject.find_by('alias', '')).to eq([user_1_with_associations])
+        expect(subject.find_by('', 'alias')).to eq([user_1_with_associations])
+      end
+    end
+
+    context 'and the field is empty' do
+      context 'and there no users that match' do
+        it 'returns an empty array' do
+          expect(subject.find_by('justin', '')).to eq([])
+        end
+      end
+
+      context 'and there is a single user that matches' do
+        it 'returns the correct user' do
+          expect(subject.find_by('admin', '')).to eq([user_2_with_associations])
+        end
+      end
+
+      context 'and there are multiple users that match' do
+        it 'returns the users' do
+          expect(subject.find_by('Armenia', '')).to eq([user_1_with_associations, user_2_with_associations])
+        end
+      end
+
+      context 'and the value is in an array' do
+        it 'returns the users' do
+          expect(subject.find_by('Armenia', '')).to eq([user_1_with_associations, user_2_with_associations])
+        end
       end
     end
   end

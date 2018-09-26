@@ -144,45 +144,73 @@ describe Tickets do
       allow(users).to receive(:find).with(2).and_return(ticket_2_users)
     end
 
-    context 'and the field does not exist' do
-      it 'returns an empty array' do
-        expect(subject.find_by('made up', 'justin')).to eq([])
+    context 'and the field is specified' do
+      context 'and the field does not exist' do
+        it 'returns an empty array' do
+          expect(subject.find_by('justin', 'madeup')).to eq([])
+        end
+      end
+
+      context 'and there no tickets that match' do
+        it 'returns an empty array' do
+          expect(subject.find_by('made up', 'type')).to eq([])
+        end
+      end
+
+      context 'and there is a single user that matches' do
+        it 'returns the correct user' do
+          expect(subject.find_by('chat', 'via')).to eq([ticket_2_with_associations])
+        end
+      end
+
+      context 'and there are multiple tickets that match' do
+        it 'returns the tickets' do
+          expect(subject.find_by('web', 'via')).to eq([ticket_1_with_associations, ticket_3_with_associations])
+        end
+      end
+
+      context 'and the field is not a string' do
+        it 'returns the tickets' do
+          expect(subject.find_by('true', 'has_incidents')).to eq([ticket_3_with_associations])
+        end
+      end
+
+      context 'and the field is an array' do
+        it 'returns the tickets' do
+          expect(subject.find_by('Ohio', 'tags')).to eq([ticket_1_with_associations])
+        end
+      end
+
+      context 'and the field is nil' do
+        it 'returns the tickets' do
+          expect(subject.find_by('', 'status')).to eq([ticket_3_with_associations])
+        end
       end
     end
 
-    context 'and there no tickets that match' do
-      it 'returns an empty array' do
-        expect(subject.find_by('type', 'made up')).to eq([])
+    context 'and the field is empty' do
+      context 'and there no tickets that match' do
+        it 'returns an empty array' do
+          expect(subject.find_by('justin', '')).to eq([])
+        end
       end
-    end
 
-    context 'and there is a single user that matches' do
-      it 'returns the correct user' do
-        expect(subject.find_by('via', 'chat')).to eq([ticket_2_with_associations])
+      context 'and there is a single ticket that matches' do
+        it 'returns the correct ticket' do
+          expect(subject.find_by('chat', '')).to eq([ticket_2_with_associations])
+        end
       end
-    end
 
-    context 'and there are multiple tickets that match' do
-      it 'returns the tickets' do
-        expect(subject.find_by('via', 'web')).to eq([ticket_1_with_associations, ticket_3_with_associations])
+      context 'and there are multiple tickets that match' do
+        it 'returns the tickets' do
+          expect(subject.find_by('web', '')).to eq([ticket_1_with_associations, ticket_3_with_associations])
+        end
       end
-    end
 
-    context 'and the field is not a string' do
-      it 'returns the tickets' do
-        expect(subject.find_by('has_incidents', 'true')).to eq([ticket_3_with_associations])
-      end
-    end
-
-    context 'and the field is an array' do
-      it 'returns the tickets' do
-        expect(subject.find_by('tags', 'Ohio')).to eq([ticket_1_with_associations])
-      end
-    end
-
-    context 'and the field is nil' do
-      it 'returns the tickets' do
-        expect(subject.find_by('status', '')).to eq([ticket_3_with_associations])
+      context 'and the value is in an array' do
+        it 'returns the tickets' do
+          expect(subject.find_by('Ohio', '')).to eq([ticket_1_with_associations])
+        end
       end
     end
   end

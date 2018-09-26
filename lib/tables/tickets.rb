@@ -1,4 +1,6 @@
-class Tickets
+require_relative './base_table'
+
+class Tickets < BaseTable
   def add_data(tickets, organizations, users)
     @tickets = tickets
     @indexed_by_id = index_by_id
@@ -7,16 +9,6 @@ class Tickets
     @organizations = organizations
     @users = users
     self
-  end
-
-  def find_by(field, value)
-    @tickets.select do |ticket|
-      if ticket[field].is_a? Array
-        ticket[field].include?(value)
-      else
-        ticket[field].to_s == value
-      end
-    end.map { |ticket| ticket.merge(associations_for(ticket)) }
   end
 
   def find_by_organization(organization_id)
@@ -32,6 +24,10 @@ class Tickets
   end
 
   private
+
+  def data
+    @tickets
+  end
 
   def associations_for(ticket)
     {

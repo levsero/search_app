@@ -14,15 +14,11 @@ class SearchApp
     loop do
       puts 'Select a field to search'
       field = gets.chomp
-      if field.empty?
-        puts 'field cannot be empty'
-        next
-      end
 
       puts 'Select a value to search on'
       value = gets.chomp
 
-      result = @database.search(table, field, value)
+      result = @database.search(value, field)
 
       puts JSON.pretty_generate(result)
     end

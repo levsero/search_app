@@ -36,7 +36,7 @@ describe Database do
     let(:database) { Database.new('{"organizations": []}', '{"users": []}', '{"tickets": []}') }
 
     it 'combines the results from all tables' do
-      expect(database.search('users', '_id', '234')).to eq([user, ticket, organization])
+      expect(database.search('_id', '234')).to eq([user, ticket, organization])
     end
   end
 end
